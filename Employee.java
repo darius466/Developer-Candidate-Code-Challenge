@@ -71,13 +71,14 @@ public class Employee {
         {            
             bufferReader = new BufferedReader(new FileReader(fileName)); //initializing bufferreader object    
             String line;
-            employees = new ArrayList<Employee>();
+            employees = new ArrayList<Employee>(); //creates a list of employee objects
             
             while ((line = bufferReader.readLine()) != null) { //read csv file line be line 
 
                 String[] tokens = line.split(",");
-                Employee employee = new Employee();
+                Employee employee = new Employee(); //new employee object for every line
 
+                //set object attributes from columns in csv file
                 employee.setName(tokens[0]);
                 employee.setRate(Float.valueOf(tokens[1]));
                 employee.setHour(Float.valueOf(tokens[2]));
