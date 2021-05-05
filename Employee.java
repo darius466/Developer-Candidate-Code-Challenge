@@ -3,13 +3,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class Employee {
-    //POJO for records in csv file
+    //objects for records in csv file
     String Name;
     float Rate;
     float Hour;
     String Role;
     float Salary;
-    ;
+    
     //getters and setters for employee object
     public String getName() {
         return Name;
@@ -68,14 +68,12 @@ public class Employee {
         List<Employee> employees;
         BufferedReader bufferReader = null;
         try
-        {
-            
-            bufferReader = new BufferedReader(new FileReader(fileName)); //initializing bufferreader object
-    
+        {            
+            bufferReader = new BufferedReader(new FileReader(fileName)); //initializing bufferreader object    
             String line;
             employees = new ArrayList<Employee>();
             
-            while ((line = bufferReader.readLine()) != null)   { //read csv file line be line
+            while ((line = bufferReader.readLine()) != null) { //read csv file line be line 
 
                 String[] tokens = line.split(",");
                 Employee employee = new Employee();
@@ -101,10 +99,10 @@ public class Employee {
         return new ArrayList<Employee>();
     }
 
-    //in main method we calculate employee salaries 
+    //main method to calculate employee salaries 
     public static void main(String[] args){
 
-        String calc = args[0]; //variable used to determine which calculation type we want
+        String calc_type = args[0]; //variable used to determine which calculation type we want
         float rate;
         float hoursWorked;
         String role;
@@ -122,23 +120,27 @@ public class Employee {
                 employee.setSalary(hoursWorked * rate * 52); //52 weeks in a year
                 if (employee.getSalary() > 50000)
                 {
-                    employee.setSalary(50000);
+                    employee.setSalary(50000); //salary cap
                 }
             }
+
             else if (role.equals("Contract"))
             {
                 employee.setSalary((hoursWorked * rate) * 52 + 10000); //base salary for contractors is 10000
             }
+
             else 
             {
                 employee.setSalary(hoursWorked * rate * 52); //part timers
             }
            
         }
-        if (calc.equals("a"))  //calculate total salary in dollars
+
+        if (calc_type.equals("a"))  //calculate total salary in dollars
         {
             System.out.println("\n" + employees + "\n");
         }
+
         else //calculate totaly salary in dollars and sort by role 
         {
             employees.sort(Comparator.comparing(Employee::getRole)); //sort
@@ -146,7 +148,6 @@ public class Employee {
         }
    
     }
-
 
 }
 
