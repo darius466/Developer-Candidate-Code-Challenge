@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.NumberFormat;
 
 public class Employee {
     //objects for records in csv file
@@ -9,6 +10,8 @@ public class Employee {
     float Hour;
     String Role;
     float Salary;
+
+    NumberFormat converter = NumberFormat.getCurrencyInstance(Locale.US); //formatter for US currency 
     
     //getters and setters for employee object
     public String getName() {
@@ -59,7 +62,7 @@ public class Employee {
                 ", Rate = " + Rate +
                 ", Hour = " + Hour +
                 ", Role = '" + Role + '\'' +
-                ", Salary = " + Salary +
+                ", Salary = " + converter.format(Salary) + //convert salary attribute into dollars
                 '}' + "\n";
     }
 
