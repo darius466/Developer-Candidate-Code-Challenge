@@ -102,50 +102,61 @@ public class Employee {
 
     //main method to calculate employee salaries 
     public static void main(String[] args){
-
-        String calc_type = args[0]; //variable used to determine which calculation type we want
-        float rate;
-        float hoursWorked;
-        String role;
-
-        List<Employee> employees = open(args[1]); //enter file path in command line
-
-        for(Employee employee : employees) {;
-
-            hoursWorked = employee.getHour();
-            rate = employee.getRate();
-            role = employee.getRole();
-
-            if (role.equals("Fulltime"))
-            {
-                employee.setSalary(hoursWorked * rate * 52); //52 weeks in a year
-                if (employee.getSalary() > 50000)
+        try
+        {
+            String calc_type = args[0]; //variable used to determine which calculation type we want
+            float rate;
+            float hoursWorked;
+            String role;
+            float weeks = 52; //52 weeks in a year
+    
+            List<Employee> employees = open(args[1]); //enter file path for second command line argument ex. C:\\Users\\user\\Desktop\\filename.csv
+    
+            for(Employee employee : employees) {;
+    
+                hoursWorked = employee.getHour();
+                rate = employee.getRate();
+                role = employee.getRole();
+    
+                if (role.equals("Fulltime"))
                 {
-                    employee.setSalary(50000); //salary cap
+                    employee.setSalary(hoursWorked * rate * weeks); 
+                    if (employee.getSalary() > 50000)
+                    {
+                        employee.setSalary(50000); //salary capped at 50000
+                    }
                 }
+    
+                else if (role.equals("Contract"))
+                {
+                    employee.setSalary((hoursWorked * rate) * weeks + 10000); //base salary for contractors is 10000
+                }
+    
+                else 
+                {
+                    employee.setSalary(hoursWorked * rate * weeks); //part timers
+                }
+               
             }
-
-            else if (role.equals("Contract"))
+            
+            if (calc_type.equals("calc_a"))  //calculate total salary in dollars
             {
-                employee.setSalary((hoursWorked * rate) * 52 + 10000); //base salary for contractors is 10000
+                System.out.println("\n" + employees + "\n");
             }
-
-            else 
+    
+            else if (calc_type.equals("calc_b")) //calculate totaly salary in dollars and sort by role 
             {
-                employee.setSalary(hoursWorked * rate * 52); //part timers
+                employees.sort(Comparator.comparing(Employee::getRole)); //sort
+                System.out.println("\n" + employees + "\n");
             }
-           
+            else    
+            {
+                System.out.println("please enter calc_a or calc_b as first command line argument");
+            }
         }
-
-        if (calc_type.equals("a"))  //calculate total salary in dollars
+        catch (Exception e)
         {
-            System.out.println("\n" + employees + "\n");
-        }
-
-        else //calculate totaly salary in dollars and sort by role 
-        {
-            employees.sort(Comparator.comparing(Employee::getRole)); //sort
-            System.out.println("\n" + employees + "\n");
+            System.out.println("Error running program: try entering calc_a or calc_b as first argument and the file path as second argument: " + e.getMessage());
         }
    
     }
