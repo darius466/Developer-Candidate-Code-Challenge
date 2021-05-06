@@ -3,8 +3,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.text.NumberFormat;
 
+//create employee objects for records in csv file
 public class Employee {
-    //objects for records in csv file
+    
     String Name;
     float Rate;
     float Hour;
